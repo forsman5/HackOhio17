@@ -1,0 +1,5 @@
+#constants
+IN_PIN = 24
+SWITCH_PIN = 23
+BUTTON_PRESSED = False
+BUTTON_UNPRESSED = True
