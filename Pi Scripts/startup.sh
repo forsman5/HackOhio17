@@ -1,9 +1,10 @@
 #!/bin/bash
 
-turnOff=$(sudo python checkSwitch.py)
+devMode=$(sudo python checkSwitch.py)
 
-sudo python main.py
+if [ "$devMode" == 0 ];
+then
+	sudo python main.py
 
-if [$turnOff = "1"]
 	sudo shutdown -h
 fi
