@@ -1,2 +1,10 @@
-
+*.iml
 Hack2017/\.idea/modules\.xml
+Hack2017/.gradle
+Hack2017/local.properties
+Hack2017/.idea/workspace.xml
+Hack2017/.idea/libraries
+Hack2017/.DS_Store
+Hack2017/build
+Hack2017/captures
+Hack2017/.externalNativeBuild
