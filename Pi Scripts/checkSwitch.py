@@ -20,12 +20,11 @@ while (timer < WINDOW):
         pressedCount = pressedCount + 1
 
     sleep(.01)
-
     timer = timer + 1
 
 percentage = pressedCount / WINDOW
 
-if (percentage > 95):
+if (percentage > .95):
     returnValue = 1
 else:
     returnValue = 0

@@ -6,5 +6,5 @@ if [ "$devMode" == 0 ];
 then
 	sudo python main.py
 
-	sudo shutdown -h
+	sudo shutdown -h +0
 fi
