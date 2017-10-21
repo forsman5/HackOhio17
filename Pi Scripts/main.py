@@ -22,16 +22,17 @@ GPIO.setup(IN_PIN,GPIO.IN, pull_up_down = GPIO.PUD_UP)
 #turn off on hold button press
 buttonHeld = False
 
-while (!buttonHeld):
+while (not buttonHeld):
     sentinel = BUTTON_UNPRESSED
     #oldBlueTooth = initial bluetooth reading
     
-    while (!sentinel):
+    while (not sentinel):
         #newBlueTooth = getReading()
         #if (oldBlueTooth != newBluetooth):
         #   sentinel = false
         #else:
         sentinel = GPIO.input(IN_PIN)
+        
         if (sentinel == BUTTON_PRESSED):
             #looking for a hold
             loopCount = 1
