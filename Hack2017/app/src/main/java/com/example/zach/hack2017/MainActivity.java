@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
         takePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                (new Thread(new BlueToothService("lightOn"))).start();
 
             }
         });
@@ -93,11 +94,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-    final class BluetoothStuff implements Runnable {
+    final class BlueToothService implements Runnable {
 
         private String btMsg;
 
-        public BluetoothStuff(String msg) {
+        public BlueToothService(String msg) {
             btMsg = msg;
         }
 
