@@ -25,7 +25,7 @@ while (not buttonHeld):
     while (sentinel == constants.BUTTON_UNPRESSED):
         #newBlueTooth = getReading()
         #if (oldBlueTooth != newBluetooth):
-        #   sentinel = false
+        #   sentinel = constants.BUTTON_PRESSED
         #else:
         sentinel = GPIO.input(constants.IN_PIN)
         
