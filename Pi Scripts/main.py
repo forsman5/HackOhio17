@@ -16,12 +16,16 @@ GPIO.setwarnings(False)
 GPIO.setup(IN_PIN,GPIO.IN)
 
 # currently only searches for GPIO button press
-sentinel = False
-while (!sentinel):
-    sentinel = GPIO.input(IN_PIN)
-    sleep(.5)
+while (1):
+    sentinel = False
+    while (!sentinel):
+        #reassign sentinel here also using bluetooth
+        sentinel = GPIO.input(IN_PIN) # and bluetooth.signal()
+        sleep(.5)
 
-camera.start_preview()
-sleep(3)
-camera.capture(FILENAME)
-camera.stop_preview()
+    camera.start_preview()
+    sleep(3)
+    camera.capture(FILENAME)
+    camera.stop_preview()
+
+camera.close()
