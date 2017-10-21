@@ -1,15 +1,16 @@
 import RPi.GPIO as GPIO
 import picamera
-import time
+from time import sleep
 
 camera = picamera.PiCamera()
 
+PIN_NUMBER = 24
+
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
-GPIO.setup(18,GPIO.OUT)
+GPIO.setup(PIN_NUMBER,GPIO.OUT)
 
 sentinel = True
-PIN_NUMBER = 18
 
 while sentinel:
     userIn = input("Enter On, Off, camera, or stop: ")
@@ -20,7 +21,7 @@ while sentinel:
     elif (userIn == "off" or userIn == "Off"):
         print("LED off")
         GPIO.output(PIN_NUMBER,GPIO.LOW)
-    elif (userIn == "Camera" or userIn == "camera")
+    elif (userIn == "Camera" or userIn == "camera"):
         fileName = input("Enter the filename, includng extension, to save to: ")
     
         print("Point the camera where you want. A three second preview will start. \n")

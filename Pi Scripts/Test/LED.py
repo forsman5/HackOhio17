@@ -1,14 +1,15 @@
 import RPi.GPIO as GPIO
 
+PIN_NUMBER = 24
+
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
-GPIO.setup(18,GPIO.OUT)
+GPIO.setup(PIN_NUMBER,GPIO.OUT)
 
 sentinel = True
-PIN_NUMBER = 18
 
 while sentinel:
-    userIn = input("Enter On, Off, or stop: ")
+    userIn = input("Enter On, Off, camera, or stop: ")
 
     if (userIn == "On" or userIn == "on" ):
         print("LED on")
@@ -19,6 +20,7 @@ while sentinel:
     else:
         print("interpretted as stop..")
         sentinel = False
+
         
 
 
