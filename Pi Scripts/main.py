@@ -1,16 +1,16 @@
 import RPi.GPIO as GPIO
 import picamera
 from time import sleep
+import datetime
 
 # establish bluetooth connection here
 
 camera = picamera.PiCamera()
 
 #constants
-FILENAME = "RecentFile.png"
 IN_PIN = 23
-BUTTON_PRESSED = True
-BUTTON_UNPRESSED = False
+BUTTON_PRESSED = False
+BUTTON_UNPRESSED = True
 
 #GPIO setup
 GPIO.setmode(GPIO.BCM)
@@ -26,7 +26,7 @@ while (not buttonHeld):
     sentinel = BUTTON_UNPRESSED
     #oldBlueTooth = initial bluetooth reading
     
-    while (not sentinel):
+    while (sentinel == BUTTON_UNPRESSED):
         #newBlueTooth = getReading()
         #if (oldBlueTooth != newBluetooth):
         #   sentinel = false
@@ -42,7 +42,8 @@ while (not buttonHeld):
                 sentinel = GPIO.input(IN_PIN)
                 sleep(.01)
 
-            print(loopCount) # debugging
+            # resetting for waiting for button to be unpressed
+            sentinel = BUTTON_PRESSED
 
             if (loopCount > 200): # 2 seconds
                 #sentinel = unpressed by virtue of reaching this step
@@ -50,10 +51,10 @@ while (not buttonHeld):
             
         sleep(.01)
 
-    if (!buttonHeld):
+    if (not buttonHeld):
         camera.start_preview()
         sleep(3)
-        camera.capture(FILENAME)
+        camera.capture(datetime.datetime.now().strftime("%X") + "_" + datetime.datetime.now().strftime("%x") + ".png")
         camera.stop_preview()
 
 camera.close()
