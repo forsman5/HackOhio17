@@ -1,5 +1,6 @@
 import RPi.GPIO as GPIO
 import constants
+from time import sleep
 
 #length of time to check for button press
 WINDOW = 200
@@ -11,8 +12,8 @@ GPIO.setup(constants.SWITCH_PIN, GPIO.IN, pull_up_down = GPIO.PUD_UP)
 
 # this is done differently than in main - different ways to account for bouncing
 # later, we can decide whichever works better and port to the other occurence
-int timer = 0;
-int pressedCount = 0;
+timer = 0;
+pressedCount = 0;
 while (timer < WINDOW):
     returnValue = GPIO.input(constants.SWITCH_PIN)
     if (returnValue == constants.BUTTON_PRESSED):
