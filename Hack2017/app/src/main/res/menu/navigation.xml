@@ -22,7 +22,6 @@
     <item
         android:id="@+id/navigation_notifications"
         android:icon="@drawable/video"
-        android:color = "black"
         app:showAsAction="ifRoom"
         android:enabled="true"
         android:title="@string/title_notifications" />
