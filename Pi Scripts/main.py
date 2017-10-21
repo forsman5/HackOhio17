@@ -50,7 +50,7 @@ while (not buttonHeld):
     if (not buttonHeld):
         camera.start_preview()
         sleep(3)
-        camera.capture(datetime.datetime.now().strftime("%X") + "_" + datetime.datetime.now().strftime("%x") + ".png")
+        camera.capture(datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + ".png")
         camera.stop_preview()
 
 camera.close()
