@@ -35,6 +35,24 @@
             android:padding="50px"
             android:textSize="28px"
             android:text="Take Video" />
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="174dp"
+            android:text="TextView" />
+
+        <TextView
+            android:id="@+id/status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/text"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="60dp"
+            android:text="Status: "
+            android:textSize="30sp" />
+
 
 
 
@@ -54,14 +72,6 @@
         app:menu="@menu/navigation"
         android:layout_alignParentStart="true"/>
 
-    <TextView
-        android:id="@+id/text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/navigation"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="174dp"
-        android:text="TextView" />
 
 
 </RelativeLayout>

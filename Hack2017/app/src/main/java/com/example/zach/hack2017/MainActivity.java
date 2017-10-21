@@ -3,6 +3,7 @@ package com.example.zach.hack2017;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -14,9 +15,12 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.os.Handler;
 
+import org.w3c.dom.Text;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Set;
 import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
@@ -25,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     BluetoothDevice mmDevice = null;
     Handler handler;
     TextView myLabel;
+    private final static int REQUEST_ENABLE_BT = 1;
 
 
     final byte delimiter = 33;
@@ -59,14 +64,29 @@ public class MainActivity extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         Button takePhoto = (Button) findViewById(R.id.takePhotoButton);
         Button takeVideo = (Button) findViewById(R.id.takeVideoButton);
+        TextView status = (TextView) findViewById(R.id.status);
         myLabel = (TextView) findViewById(R.id.text);
-        BluetoothAdapter mBlueToothAdapter = BluetoothAdapter.getDefaultAdapter();
+        //create adapter
+        BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        if (!mBluetoothAdapter.isEnabled()) {
+            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+        }
+        Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
+
+        if (pairedDevices.size() > 0) {
+            // There are paired devices. Get the name and address of each paired device.
+            for (BluetoothDevice device : pairedDevices) {
+                String deviceName = device.getName();
+                String deviceHardwareAddress = device.getAddress(); // MAC address
+            }
+        }
         handler = new Handler();
 
         takePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                (new Thread(new BlueToothService("lightOn"))).start();
+                (new Thread(new BlueToothService("takePhoto"))).start();
 
             }
         });
