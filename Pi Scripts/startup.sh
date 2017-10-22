@@ -1,5 +1,7 @@
 #!/bin/bash
 
+/usr/bin/sudo /usr/bin/python printSystemMessage.py bootEarly
+
 devMode=$(/usr/bin/sudo /usr/bin/python checkSwitch.py)
 
 if [ "$devMode" == 0 ];

@@ -11,6 +11,9 @@ elif (argv[1] == "shut"):
 elif (argv[1] == "boot"):
     displayYellow("System Booted")
     clearDelay(MESSAGE_DURATION / 2)
+elif (argv[1] == "bootEarly"):
+    displayYellow("Boot Started..")
+    clearDelay(MESSAGE_DURATION)
 else:
     displayYellow("ERROR 1 ENCOUNTERED")
     clearDelay(MESSAGE_DURATION * 5)

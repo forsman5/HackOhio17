@@ -1,6 +1,5 @@
 import RPi.GPIO as GPIO
 import picamera
-import constants
 import datetime
 import os
 import sys
