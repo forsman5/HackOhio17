@@ -1,9 +1,7 @@
 import RPi.GPIO as GPIO
 import picamera
 import constants
-from time import sleep
 import datetime
-import textDisp
 
 # establish bluetooth connection here
 
@@ -72,7 +70,6 @@ while (not buttonHeld):
         camera.capture(fileName)
         camera.stop_preview()
         displayText("Picture@ " + fileName)
-        sleep(3)
-        clearScreen()
+        clearDelay(3)
 
 camera.close()
