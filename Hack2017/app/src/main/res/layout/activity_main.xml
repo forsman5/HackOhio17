@@ -53,6 +53,16 @@
             android:text="Status: "
             android:textSize="30sp" />
 
+        <Button
+            android:id="@+id/read"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="161dp"
+            android:text="Read"
+            android:layout_below="@+id/takeVideoButton"
+            android:layout_centerHorizontal="true" />
+
+
 
 
 
