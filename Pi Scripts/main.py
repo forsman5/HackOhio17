@@ -54,10 +54,14 @@ while (not buttonHeld):
             camera.start_recording(datetime.datetime.now().strftime("%Y%m%d%H%M%S") + ".h264"
 )
 
+            #timer to count number of loops elapsed - cap for length of video
+            elapsed = 0
+
             #wait for button press
-            while (videoSentinel == constants.BUTTON_UNPRESSED)
+            while (videoSentinel == constants.BUTTON_UNPRESSED and elapsed < 600): # elapsed = .05 sleep * 600 = 30 seconds max
                 videoSentinel = GPIO.input(constants.VIDEO_PIN)
                 sleep(.05)
+                elapsed = elapsed + 1
             
             camera.stop_recording()
             
