@@ -3,6 +3,7 @@ import picamera
 import datetime
 import os
 import sys
+import driveScript
 
 from bluetooth import *
 from constants import *
@@ -11,19 +12,25 @@ from time import sleep
 
 #function to change a .h264 to a mp4 and alert the user
 #requires the installation of MP4Box!!
-def convertVideo(file):
+def convertVideo(file, nameList):
+    nameList.append(file)
     fileWord = file[:(len(file) - 5)]
     os.system("MP4Box -fps 60 -add " + fileWord + ".h264 " + fileWord + ".mp4")
     displayText("Video@ " + fileWord + ".mp4")
     clearDelay(MESSAGE_DURATION)
 
-def takePicture(cam):
+def takePicture(cam, nameList):
     fileName = datetime.datetime.now().strftime("%Y%m%d%H%M%S") + ".png"
     camera.capture(fileName)
     displayText("Picture@ " + fileName)
     clearDelay(MESSAGE_DURATION)
 
+    nameList.append(fileName)
+
 # establish bluetooth connection here
+
+#list of all file names created
+names = {}
 
 camera = picamera.PiCamera()
 camera.resolution = (XRESOLUTION, YRESOLUTION)
@@ -69,7 +76,7 @@ while (not buttonHeld):
                 buttonHeld = True
 
             if (not buttonHeld):
-                takePicture(camera)
+                takePicture(camera, names)
 
         #if video button stopped loop -- RECORD VIDEO     
         elif (videoSentinel == BUTTON_PRESSED):
@@ -94,8 +101,9 @@ while (not buttonHeld):
             camera.stop_recording()
 
             #converting the raw video into something useful
-            convertVideo(fileNameVideo)
+            convertVideo(fileNameVideo, names)
             
         sleep(.01)
 
 camera.close()
+driveScript.uploadList(names)
