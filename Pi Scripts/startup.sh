@@ -1,18 +1,18 @@
 #!/bin/bash
 
-devMode=$(sudo python checkSwitch.py)
+devMode=$(/usr/bin/sudo /usr/bin/python checkSwitch.py)
 
 if [ "$devMode" == 0 ];
 then
-	sudo python printSystemMessage.py boot
+	/usr/bin/sudo /usr/bin/python printSystemMessage.py boot
 
-	sudo python main.py
+	/usr/bin/sudo /usr/bin/python main.py
 	
-	sudo python printSystemMessage.py shut
+	/usr/bin/sudo /usr/bin/python printSystemMessage.py shut
 
-	sudo rm *.h264
+	/usr/bin/sudo /usr/bin/rm *.h264 -f
 	
-	sudo shutdown -h +0
+	/usr/bin/sudo /usr/bin/shutdown -h +0
 else
-	sudo python printSystemMessage.py dev
+	/usr/bin/sudo /usr/bin/python printSystemMessage.py dev
 fi
