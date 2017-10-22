@@ -25,4 +25,4 @@ YRESOLUTION = 480
 #sleep then clear screen. used for multithreading
 def clearDelay(s):
     sleep(s)
-    clearScreen()
+    textDisp.clearScreen()

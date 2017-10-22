@@ -1,10 +1,13 @@
 import sys
 import constants
+import textDisp
 
-if (argv[1] == "dev"):
-    displayText("Entering Dev Mode")
-    clearDelay(3)
-elif (argv[1] == "shut"):
-    displayText("Shutting down..")
-    clearDelay(3)
+if (sys.argv[1] == "dev"):
+    textDisp.displayText("Entering Dev Mode")
+    constants.clearDelay(3)
+elif (sys.argv[1] == "shut"):
+    textDisp.displayText("Shutting down..")
+    constants.clearDelay(3)
+else:
+    textDisp.displayText("ERROR 1 ENCOUNTERED")
     

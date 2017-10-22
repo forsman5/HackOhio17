@@ -15,8 +15,12 @@ camera.resolution = (constants.XRESOLUTION, constants.YRESOLUTION)
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
 GPIO.setup(constants.IN_PIN,GPIO.IN, pull_up_down = GPIO.PUD_UP)
+GPIO.setup(constants.VIDEO_PIN,GPIO.IN, pull_up_down = GPIO.PUD_UP)
 
 # currently only searches for GPIO button press
+
+textDisp.displayText("System Booted")
+constants.clearDelay(1.5)
 
 #turn off on hold button press
 buttonHeld = False
@@ -54,8 +58,9 @@ while (not buttonHeld):
         #if video button stopped loop       
         elif (videoSentinel == constants.BUTTON_PRESSED):
             # start recording
-            camera.start_recording(datetime.datetime.now().strftime("%Y%m%d%H%M%S") + ".h264"
-)
+            fileNameVideo = datetime.datetime.now().strftime("%Y%m%d%H%M%S") + ".mp4"
+            camera.start_recording(fileNameVideo)
+            camera.start_preview()
 
             #timer to count number of loops elapsed - cap for length of video
             elapsed = 0
@@ -65,8 +70,11 @@ while (not buttonHeld):
                 videoSentinel = GPIO.input(constants.VIDEO_PIN)
                 sleep(.05)
                 elapsed = elapsed + 1
-            
+
+            camera.stop_preview()
             camera.stop_recording()
+            textDisp.displayText("Video@ " + fileNameVideo)
+            constants.clearDelay(3)
             
         sleep(.01)
 
@@ -76,7 +84,7 @@ while (not buttonHeld):
         fileName = datetime.datetime.now().strftime("%Y%m%d%H%M%S") + ".png"
         camera.capture(fileName)
         camera.stop_preview()
-        displayText("Picture@ " + fileName)
-        clearDelay(3)
+        textDisp.displayText("Picture@ " + fileName)
+        constants.clearDelay(3)
 
 camera.close()
