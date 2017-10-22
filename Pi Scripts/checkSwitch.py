@@ -1,4 +1,5 @@
 import RPi.GPIO as GPIO
+from time import sleep
 import constants
 
 #length of time to check for button press

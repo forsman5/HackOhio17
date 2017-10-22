@@ -2,6 +2,9 @@ import RPi.GPIO as GPIO
 import picamera
 import constants
 import datetime
+import textDisp
+
+from time import sleep
 
 # establish bluetooth connection here
 
@@ -49,7 +52,7 @@ while (not buttonHeld):
                 buttonHeld = True
 
         #if video button stopped loop       
-        elif (videoSentinel == constants.BUTTON_PRESSED)
+        elif (videoSentinel == constants.BUTTON_PRESSED):
             # start recording
             camera.start_recording(datetime.datetime.now().strftime("%Y%m%d%H%M%S") + ".h264"
 )
