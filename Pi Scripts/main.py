@@ -2,10 +2,12 @@ import RPi.GPIO as GPIO
 import picamera
 import constants
 import datetime
-import textDisp
 import os
 import sys
 
+from bluetooth import *
+from constants import *
+from textDisp import displayText
 from time import sleep
 
 #function to change a .h264 to a mp4 and alert the user
@@ -13,8 +15,8 @@ from time import sleep
 def convertVideo(file):
     fileWord = file[:(len(file) - 5)]
     os.system("MP4Box -fps 60 -add " + fileWord + ".h264 " + fileWord + ".mp4")
-    textDisp.displayText("Video@ " + fileWord + ".mp4")
-    constants.clearDelay(constants.MESSAGE_DURATION)
+    displayText("Video@ " + fileWord + ".mp4")
+    clearDelay(MESSAGE_DURATION)
 
 def takePicture(cam):
     camera.start_preview()
@@ -22,19 +24,19 @@ def takePicture(cam):
     fileName = datetime.datetime.now().strftime("%Y%m%d%H%M%S") + ".png"
     camera.capture(fileName)
     camera.stop_preview()
-    textDisp.displayText("Picture@ " + fileName)
-    constants.clearDelay(constants.MESSAGE_DURATION)
+    displayText("Picture@ " + fileName)
+    clearDelay(MESSAGE_DURATION)
 
 # establish bluetooth connection here
 
 camera = picamera.PiCamera()
-camera.resolution = (constants.XRESOLUTION, constants.YRESOLUTION)
+camera.resolution = (XRESOLUTION, YRESOLUTION)
 
 #GPIO setup
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
-GPIO.setup(constants.IN_PIN,GPIO.IN, pull_up_down = GPIO.PUD_UP)
-GPIO.setup(constants.VIDEO_PIN,GPIO.IN, pull_up_down = GPIO.PUD_UP)
+GPIO.setup(IN_PIN,GPIO.IN, pull_up_down = GPIO.PUD_UP)
+GPIO.setup(VIDEO_PIN,GPIO.IN, pull_up_down = GPIO.PUD_UP)
 
 # currently only searches for GPIO button press
 
@@ -42,43 +44,42 @@ GPIO.setup(constants.VIDEO_PIN,GPIO.IN, pull_up_down = GPIO.PUD_UP)
 buttonHeld = False
 
 while (not buttonHeld):
-    pictureSentinel = constants.BUTTON_UNPRESSED
-    videoSentinel = constants.BUTTON_UNPRESSED
+    pictureSentinel = BUTTON_UNPRESSED
+    videoSentinel = BUTTON_UNPRESSED
     #oldBlueTooth = initial bluetooth reading
     
-    while (pictureSentinel == constants.BUTTON_UNPRESSED and videoSentinel == constants.BUTTON_UNPRESSED):
-        #newBlueTooth = getReading()
-        #if (oldBlueTooth != newBluetooth):
-        #   pictureSentinel = constants.BUTTON_PRESSED
-        #else:
-        pictureSentinel = GPIO.input(constants.IN_PIN)
-        videoSentinel = GPIO.input(constants.VIDEO_PIN)
+    while (pictureSentinel == BUTTON_UNPRESSED and videoSentinel == BUTTON_UNPRESSED):
+        #try { sock.getData }
+        # if data != null { parseData }
+        # if (data == pic) pictureSentinel = BUTTON_PRESSED )
+        pictureSentinel = GPIO.input(IN_PIN)
+        videoSentinel = GPIO.input(VIDEO_PIN)
 
         #if picture button stopped loop -- TAKE PICTURE
-        if (pictureSentinel == constants.BUTTON_PRESSED):
+        if (pictureSentinel == BUTTON_PRESSED):
             #looking for a hold
             loopCount = 1
 
-            while (pictureSentinel == constants.BUTTON_PRESSED and loopCount < 250):
+            while (pictureSentinel == BUTTON_PRESSED and loopCount < 250):
                 loopCount = loopCount + 1
-                pictureSentinel = GPIO.input(constants.IN_PIN)
+                pictureSentinel = GPIO.input(IN_PIN)
                 sleep(.01)
 
             # resetting for waiting for button to be unpressed
-            pictureSentinel = constants.BUTTON_PRESSED
+            pictureSentinel = BUTTON_PRESSED
 
             if (loopCount > 200): # 2 seconds
                 #pictureSentinel = unpressed by virtue of reaching this step
                 buttonHeld = True
 
-            if (not buttonHeld)
+            if (not buttonHeld):
                 takePicture(camera)
 
         #if video button stopped loop -- RECORD VIDEO     
-        elif (videoSentinel == constants.BUTTON_PRESSED):
+        elif (videoSentinel == BUTTON_PRESSED):
             #wait for videoSentinel to be unpressed to start
-            while (videoSentinel == constants.BUTTON_PRESSED):
-                videoSentinel = GPIO.input(constants.VIDEO_PIN)
+            while (videoSentinel == BUTTON_PRESSED):
+                videoSentinel = GPIO.input(VIDEO_PIN)
                 sleep(.01)
 
             # start recording
@@ -90,8 +91,8 @@ while (not buttonHeld):
             elapsed = 0
 
             #wait for button press
-            while (videoSentinel == constants.BUTTON_UNPRESSED and elapsed < 600): # elapsed = .05 sleep * 600 = 30 seconds max
-                videoSentinel = GPIO.input(constants.VIDEO_PIN)
+            while (videoSentinel == BUTTON_UNPRESSED and elapsed < 600): # elapsed = .05 sleep * 600 = 30 seconds max
+                videoSentinel = GPIO.input(VIDEO_PIN)
                 sleep(.05)
                 elapsed = elapsed + 1
 

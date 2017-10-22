@@ -1,17 +1,17 @@
-import sys
-import constants
-import textDisp
+from sys import argv
+from constants import *
+from textDisp import displayYellow
 
-if (sys.argv[1] == "dev"):
-    textDisp.displayYellow("Entering Dev Mode")
-    constants.clearDelay(constants.MESSAGE_DURATION)
-elif (sys.argv[1] == "shut"):
-    textDisp.displayYellow("Shutting down..")
-    constants.clearDelay(constants.MESSAGE_DURATION)
-elif (sys.argv[1] == "boot"):
-    textDisp.displayYellow("System Booted")
-    constants.clearDelay(constants.MESSAGE_DURATION / 2)
+if (argv[1] == "dev"):
+    displayYellow("Entering Dev Mode")
+    clearDelay(MESSAGE_DURATION)
+elif (argv[1] == "shut"):
+    displayYellow("Shutting down..")
+    clearDelay(MESSAGE_DURATION)
+elif (argv[1] == "boot"):
+    displayYellow("System Booted")
+    clearDelay(MESSAGE_DURATION / 2)
 else:
-    textDisp.displayYellow("ERROR 1 ENCOUNTERED")
-    constants.clearDelay(constants.MESSAGE_DURATION * 5)
+    displayYellow("ERROR 1 ENCOUNTERED")
+    clearDelay(MESSAGE_DURATION * 5)
     

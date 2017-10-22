@@ -1,5 +1,5 @@
 from time import sleep
-import textDisp
+from textDisp import clearScreen
 #constants
 
 #pin marking where the PICTURE TAKING button is connected to
@@ -28,4 +28,4 @@ YRESOLUTION = 480
 #sleep then clear screen. used for multithreading
 def clearDelay(s):
     sleep(s)
-    textDisp.clearScreen()
+    clearScreen()
