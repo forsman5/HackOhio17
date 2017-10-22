@@ -47,7 +47,7 @@ def clearScreen():
 
 def displayText( str ):
 
-	maxChars = 12
+	maxChars = 14
 	# Initialize library.
 	disp.begin()
 
@@ -82,7 +82,15 @@ def displayText( str ):
 	x = 0
 	top = 2
 
-	if (len(str) > maxChars):
+	if(len(str) > 2 * maxChars):
+		firstLine = str[:maxChars]
+		secondLine = str[maxChars:2*maxChars]
+		thirdLine = str[2*maxChars:]
+		# Write two lines of text.
+		draw.text((x, top + 14),  firstLine,  font=minecraft16, fill=255)
+		draw.text((x, top + 30),  secondLine,  font=minecraft16, fill=255)	
+		draw.text((x, top + 46),  thirdLine,  font=minecraft16, fill=255)		
+	elif (len(str) > maxChars):
 		firstLine = str[:maxChars]
 		secondLine = str[maxChars:]
 		# Write two lines of text.
