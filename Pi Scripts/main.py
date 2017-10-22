@@ -3,14 +3,27 @@ import picamera
 import constants
 import datetime
 import textDisp
-import subprocess
+import os
+import sys
 
 from time import sleep
 
-#function to change a .h264 to a mp4
-def convertVideo(file)
-    fileWord = file[:(len(file) - 5))]
-    subprocess.call("MP4Box -fps 60 -add " + fileWord + ".h264 " + fileWord + ".mp4")
+#function to change a .h264 to a mp4 and alert the user
+#requires the installation of MP4Box!!
+def convertVideo(file):
+    fileWord = file[:(len(file) - 5)]
+    os.system("MP4Box -fps 60 -add " + fileWord + ".h264 " + fileWord + ".mp4")
+    textDisp.displayText("Video@ " + fileWord + ".mp4")
+    constants.clearDelay(constants.MESSAGE_DURATION)
+
+def takePicture(cam):
+    camera.start_preview()
+    sleep(3)
+    fileName = datetime.datetime.now().strftime("%Y%m%d%H%M%S") + ".png"
+    camera.capture(fileName)
+    camera.stop_preview()
+    textDisp.displayText("Picture@ " + fileName)
+    constants.clearDelay(constants.MESSAGE_DURATION)
 
 # establish bluetooth connection here
 
@@ -41,7 +54,7 @@ while (not buttonHeld):
         pictureSentinel = GPIO.input(constants.IN_PIN)
         videoSentinel = GPIO.input(constants.VIDEO_PIN)
 
-        #if picture button stopped loop
+        #if picture button stopped loop -- TAKE PICTURE
         if (pictureSentinel == constants.BUTTON_PRESSED):
             #looking for a hold
             loopCount = 1
@@ -58,8 +71,16 @@ while (not buttonHeld):
                 #pictureSentinel = unpressed by virtue of reaching this step
                 buttonHeld = True
 
-        #if video button stopped loop       
+            if (not buttonHeld)
+                takePicture(camera)
+
+        #if video button stopped loop -- RECORD VIDEO     
         elif (videoSentinel == constants.BUTTON_PRESSED):
+            #wait for videoSentinel to be unpressed to start
+            while (videoSentinel == constants.BUTTON_PRESSED):
+                videoSentinel = GPIO.input(constants.VIDEO_PIN)
+                sleep(.01)
+
             # start recording
             fileNameVideo = datetime.datetime.now().strftime("%Y%m%d%H%M%S") + ".h264"
             camera.start_recording(fileNameVideo)
@@ -76,19 +97,10 @@ while (not buttonHeld):
 
             camera.stop_preview()
             camera.stop_recording()
-            textDisp.displayText("Video@ " + fileNameVideo)
+
+            #converting the raw video into something useful
             convertVideo(fileNameVideo)
-            constants.clearDelay(constants.MESSAGE_DURATION)
             
         sleep(.01)
-
-    if (not buttonHeld and pictureSentinel == constants.BUTTON_PRESSED):
-        camera.start_preview()
-        sleep(3)
-        fileName = datetime.datetime.now().strftime("%Y%m%d%H%M%S") + ".png"
-        camera.capture(fileName)
-        camera.stop_preview()
-        textDisp.displayText("Picture@ " + fileName)
-        constants.clearDelay(constants.MESSAGE_DURATION)
 
 camera.close()
