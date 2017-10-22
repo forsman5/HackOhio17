@@ -1,7 +1,10 @@
 #constants
 
-#pin marking where the button is connected to
+#pin marking where the PICTURE TAKING button is connected to
 IN_PIN = 24
+
+#pin marking where the VIDEO TAKING button is connected to
+VIDEO_PIN = 1
 
 #pin that controls the checking on startup
     # if this is true, then after finishing exectuion, the py will NOT shut down

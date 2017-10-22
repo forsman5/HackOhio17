@@ -4,6 +4,9 @@ import constants
 from time import sleep
 import datetime
 
+#for calling other python files
+#import os
+
 # establish bluetooth connection here
 
 camera = picamera.PiCamera()
@@ -19,38 +22,54 @@ GPIO.setup(constants.IN_PIN,GPIO.IN, pull_up_down = GPIO.PUD_UP)
 buttonHeld = False
 
 while (not buttonHeld):
-    sentinel = constants.BUTTON_UNPRESSED
+    pictureSentinel = constants.BUTTON_UNPRESSED
+    videoSentinel = constants.BUTTON_UNPRESSED
     #oldBlueTooth = initial bluetooth reading
     
-    while (sentinel == constants.BUTTON_UNPRESSED):
+    while (pictureSentinel == constants.BUTTON_UNPRESSED and videoSentinel == constants.BUTTON_UNPRESSED):
         #newBlueTooth = getReading()
         #if (oldBlueTooth != newBluetooth):
-        #   sentinel = constants.BUTTON_PRESSED
+        #   pictureSentinel = constants.BUTTON_PRESSED
         #else:
-        sentinel = GPIO.input(constants.IN_PIN)
+        pictureSentinel = GPIO.input(constants.IN_PIN)
+        videoSentinel = GPIO.input(constants.VIDEO_PIN)
         
-        if (sentinel == constants.BUTTON_PRESSED):
+        if (pictureSentinel == constants.BUTTON_PRESSED):
             #looking for a hold
             loopCount = 1
 
-            while (sentinel == constants.BUTTON_PRESSED and loopCount < 250):
+            while (pictureSentinel == constants.BUTTON_PRESSED and loopCount < 250):
                 loopCount = loopCount + 1
-                sentinel = GPIO.input(constants.IN_PIN)
+                pictureSentinel = GPIO.input(constants.IN_PIN)
                 sleep(.01)
 
             # resetting for waiting for button to be unpressed
-            sentinel = constants.BUTTON_PRESSED
+            pictureSentinel = constants.BUTTON_PRESSED
 
             if (loopCount > 200): # 2 seconds
-                #sentinel = unpressed by virtue of reaching this step
+                #pictureSentinel = unpressed by virtue of reaching this step
                 buttonHeld = True
+        elif (videoSentinel == constants.BUTTON_PRESSED)
+            # start recording
+            camera.resolution = (640, 480)
+            camera.start_recording(datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + ".h264"
+)
+
+            #wait for button press
+            while (videoSentinel == constants.BUTTON_UNPRESSED)
+                videoSentinel = GPIO.input(constants.VIDEO_PIN)
+                sleep(.05)
+            
+            camera.stop_recording()
             
         sleep(.01)
 
-    if (not buttonHeld):
+    if (not buttonHeld and pictureSentinel == constants.BUTTON_PRESSED):
         camera.start_preview()
         sleep(3)
-        camera.capture(datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + ".png")
+        fileName = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + ".png"
+        camera.capture(fileName)
         camera.stop_preview()
+        #os.system("python displayScreen.py " + "pic " + fileName + " 5")
 
 camera.close()
