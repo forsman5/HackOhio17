@@ -15,3 +15,7 @@ SWITCH_PIN = 23
     #also allows code to be easier to understand
 BUTTON_PRESSED = False
 BUTTON_UNPRESSED = True
+
+#resolutions for the camera
+XRESOLUTION = 640
+YRESOLUTION = 480

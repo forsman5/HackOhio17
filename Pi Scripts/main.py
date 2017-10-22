@@ -10,6 +10,7 @@ import datetime
 # establish bluetooth connection here
 
 camera = picamera.PiCamera()
+camera.resolution = (constants.XRESOLUTION, constants.YRESOLUTION)
 
 #GPIO setup
 GPIO.setmode(GPIO.BCM)
@@ -51,7 +52,6 @@ while (not buttonHeld):
                 buttonHeld = True
         elif (videoSentinel == constants.BUTTON_PRESSED)
             # start recording
-            camera.resolution = (640, 480)
             camera.start_recording(datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + ".h264"
 )
 
