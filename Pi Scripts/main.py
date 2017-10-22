@@ -19,11 +19,8 @@ def convertVideo(file):
     clearDelay(MESSAGE_DURATION)
 
 def takePicture(cam):
-    camera.start_preview()
-    sleep(3)
     fileName = datetime.datetime.now().strftime("%Y%m%d%H%M%S") + ".png"
     camera.capture(fileName)
-    camera.stop_preview()
     displayText("Picture@ " + fileName)
     clearDelay(MESSAGE_DURATION)
 
@@ -85,7 +82,6 @@ while (not buttonHeld):
             # start recording
             fileNameVideo = datetime.datetime.now().strftime("%Y%m%d%H%M%S") + ".h264"
             camera.start_recording(fileNameVideo)
-            camera.start_preview()
 
             #timer to count number of loops elapsed - cap for length of video
             elapsed = 0
@@ -96,7 +92,6 @@ while (not buttonHeld):
                 sleep(.05)
                 elapsed = elapsed + 1
 
-            camera.stop_preview()
             camera.stop_recording()
 
             #converting the raw video into something useful
