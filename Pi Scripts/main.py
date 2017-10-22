@@ -3,9 +3,7 @@ import picamera
 import constants
 from time import sleep
 import datetime
-
-#for calling other python files
-#import os
+import textDisp
 
 # establish bluetooth connection here
 
@@ -34,7 +32,8 @@ while (not buttonHeld):
         #else:
         pictureSentinel = GPIO.input(constants.IN_PIN)
         videoSentinel = GPIO.input(constants.VIDEO_PIN)
-        
+
+        #if picture button stopped loop
         if (pictureSentinel == constants.BUTTON_PRESSED):
             #looking for a hold
             loopCount = 1
@@ -50,9 +49,11 @@ while (not buttonHeld):
             if (loopCount > 200): # 2 seconds
                 #pictureSentinel = unpressed by virtue of reaching this step
                 buttonHeld = True
+
+        #if video button stopped loop       
         elif (videoSentinel == constants.BUTTON_PRESSED)
             # start recording
-            camera.start_recording(datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + ".h264"
+            camera.start_recording(datetime.datetime.now().strftime("%Y%m%d%H%M%S") + ".h264"
 )
 
             #wait for button press
@@ -67,9 +68,11 @@ while (not buttonHeld):
     if (not buttonHeld and pictureSentinel == constants.BUTTON_PRESSED):
         camera.start_preview()
         sleep(3)
-        fileName = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + ".png"
+        fileName = datetime.datetime.now().strftime("%Y%m%d%H%M%S") + ".png"
         camera.capture(fileName)
         camera.stop_preview()
-        #os.system("python displayScreen.py " + "pic " + fileName + " 5")
+        displayText("Picture@ " + fileName)
+        sleep(3)
+        clearScreen()
 
 camera.close()
