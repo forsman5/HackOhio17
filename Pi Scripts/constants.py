@@ -13,6 +13,9 @@ VIDEO_PIN = 20
     # otherwise it will shut down
 SWITCH_PIN = 24
 
+#standard message length for a system message
+MESSAGE_DURATION = 3
+
 #constants to control actions on button pressing - for in case of inversion
     #also allows code to be easier to understand
 BUTTON_PRESSED = False

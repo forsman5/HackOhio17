@@ -3,11 +3,15 @@ import constants
 import textDisp
 
 if (sys.argv[1] == "dev"):
-    textDisp.displayText("Entering Dev Mode")
-    constants.clearDelay(3)
+    textDisp.displayYellow("Entering Dev Mode")
+    constants.clearDelay(constants.MESSAGE_DURATION)
 elif (sys.argv[1] == "shut"):
-    textDisp.displayText("Shutting down..")
-    constants.clearDelay(3)
+    textDisp.displayYellow("Shutting down..")
+    constants.clearDelay(constants.MESSAGE_DURATION)
+elif (sys.argv[1] == "boot"):
+    textDisp.displayYellow("System Booted")
+    constants.clearDelay(constants.MESSAGE_DURATION / 2)
 else:
-    textDisp.displayText("ERROR 1 ENCOUNTERED")
+    textDisp.displayYellow("ERROR 1 ENCOUNTERED")
+    constants.clearDelay(constants.MESSAGE_DURATION * 5)
     

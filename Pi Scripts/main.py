@@ -19,9 +19,6 @@ GPIO.setup(constants.VIDEO_PIN,GPIO.IN, pull_up_down = GPIO.PUD_UP)
 
 # currently only searches for GPIO button press
 
-textDisp.displayText("System Booted")
-constants.clearDelay(1.5)
-
 #turn off on hold button press
 buttonHeld = False
 
@@ -74,7 +71,7 @@ while (not buttonHeld):
             camera.stop_preview()
             camera.stop_recording()
             textDisp.displayText("Video@ " + fileNameVideo)
-            constants.clearDelay(3)
+            constants.clearDelay(constants.MESSAGE_DURATION)
             
         sleep(.01)
 
@@ -85,6 +82,6 @@ while (not buttonHeld):
         camera.capture(fileName)
         camera.stop_preview()
         textDisp.displayText("Picture@ " + fileName)
-        constants.clearDelay(3)
+        constants.clearDelay(constants.MESSAGE_DURATION)
 
 camera.close()

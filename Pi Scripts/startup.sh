@@ -4,6 +4,8 @@ devMode=$(sudo python checkSwitch.py)
 
 if [ "$devMode" == 0 ];
 then
+	sudo python printSystemMessage.py boot
+
 	sudo python main.py
 	
 	sudo python printSystemMessage.py shut
