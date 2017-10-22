@@ -10,6 +10,8 @@ then
 	
 	sudo python printSystemMessage.py shut
 
+	sudo rm *.h264
+	
 	sudo shutdown -h +0
 else
 	sudo python printSystemMessage.py dev

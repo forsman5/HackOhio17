@@ -3,8 +3,14 @@ import picamera
 import constants
 import datetime
 import textDisp
+import subprocess
 
 from time import sleep
+
+#function to change a .h264 to a mp4
+def convertVideo(file)
+    fileWord = file[:(len(file) - 5))]
+    subprocess.call("MP4Box -fps 60 -add " + fileWord + ".h264 " + fileWord + ".mp4")
 
 # establish bluetooth connection here
 
@@ -55,7 +61,7 @@ while (not buttonHeld):
         #if video button stopped loop       
         elif (videoSentinel == constants.BUTTON_PRESSED):
             # start recording
-            fileNameVideo = datetime.datetime.now().strftime("%Y%m%d%H%M%S") + ".mp4"
+            fileNameVideo = datetime.datetime.now().strftime("%Y%m%d%H%M%S") + ".h264"
             camera.start_recording(fileNameVideo)
             camera.start_preview()
 
@@ -71,6 +77,7 @@ while (not buttonHeld):
             camera.stop_preview()
             camera.stop_recording()
             textDisp.displayText("Video@ " + fileNameVideo)
+            convertVideo(fileNameVideo)
             constants.clearDelay(constants.MESSAGE_DURATION)
             
         sleep(.01)
